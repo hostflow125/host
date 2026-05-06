@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HostFlow</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f0f0f;
+      color: white;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .gold {
+      color: #d4af37;
+    }
+
+    header p {
+      max-width: 700px;
+      margin: auto;
+      color: #cccccc;
+      font-size: 18px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 30px;
+      background: #d4af37;
+      color: black;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1b1b1b;
+      padding: 30px;
+      border-radius: 15px;
+    }
+
+    .card h3 {
+      color: #d4af37;
+      margin-bottom: 15px;
+    }
+
+    form {
+      background: #1b1b1b;
+      padding: 40px;
+      border-radius: 20px;
+      margin-top: 40px;
+    }
+
+    form h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #0f0f0f;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #d4af37;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .payment-box {
+      background: linear-gradient(to right, #d4af37, #f0d878);
+      color: black;
+      padding: 40px;
+      border-radius: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888888;
+    }
+
+    @media(max-width: 768px) {
+      header h1 {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>
+      Hosting Renewals <span class="gold">Made Simple</span>
+    </h1>
+
+    <p>
+      A professional hosting management platform that helps clients stay online
+      with automatic renewal reminders, updates, and easy monthly payments.
+    </p>
+
+    <a href="#register" class="btn">Membership Registration</a>
+  </header>
+
+  <section>
+    <div class="cards">
+      <div class="card">
+        <h3>Automatic Reminders</h3>
+        <p>
+          Clients receive reminder notifications starting 7 days before hosting renewal.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Payment Tracking</h3>
+        <p>
+          Keep track of paid and unpaid hosting accounts from one simple dashboard.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Broadcast Updates</h3>
+        <p>
+          Send maintenance updates and important hosting announcements to all clients.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="register">
+    <form id="registrationForm">
+      <h2>Membership Registration</h2>
+
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Full Name" required />
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" placeholder="Email Address" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" id="phone" placeholder="Phone Number" required />
+      </div>
+
+      <div class="form-group">
+        <input type="url" id="website" placeholder="Website URL" />
+      </div>
+
+      <div class="form-group">
+        <select id="plan">
+          <option>Starter Hosting</option>
+          <option>Business Hosting</option>
+          <option>Premium Hosting</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="amount" placeholder="Monthly Amount" />
+      </div>
+
+      <div class="form-group">
+        <textarea id="notes" rows="5" placeholder="Additional Notes"></textarea>
+      </div>
+
+      <button type="submit">Register Membership</button>
+    </form>
+  </section>
+
+  <section>
+    <div class="payment-box">
+      <h2>Hosting Renewal Payment</h2>
+
+      <br>
+
+      <p><strong>Bank Name:</strong> YOUR BANK NAME</p>
+      <p><strong>Account Name:</strong> YOUR BUSINESS NAME</p>
+      <p><strong>Account Number:</strong> 0000000000</p>
+
+      <br>
+
+      <p>
+        After payment, send payment confirmation through WhatsApp or email.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 HostFlow — Professional Hosting Management</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const clientData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        website: document.getElementById('website').value,
+        plan: document.getElementById('plan').value,
+        amount: document.getElementById('amount').value,
+        notes: document.getElementById('notes').value,
+        registrationDate: new Date().toISOString()
+      };
+
+      console.log(clientData);
+
+      alert('Membership registration submitted successfully!');
+
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
