@@ -52,3 +52,25 @@ form.addEventListener("submit", async function (event) {
     alert("Network error.");
   }
 });
+
+const file = document.getElementById("receipt").files[0];
+
+let receiptUrl = "";
+
+if (file) {
+  const fileName = Date.now() + "_" + file.name;
+
+  const uploadResponse = await fetch(
+    `${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`,
+    {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`
+      },
+      body: file
+    }
+  );
+
+  receiptUrl = `${SUPABASE_URL}/storage/v1/object/public/receipts/${fileName}`;
+}
