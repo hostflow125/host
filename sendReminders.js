@@ -1,9 +1,6 @@
-const SUPABASE_URL = "https://wkgzrlkamugqzmuadomf.supabase.co";
-
-const SUPABASE_KEY = "sb_publishable_ylUwXg7SB-EQg1E1Qyriug_YWKo41KJ";
-
-const RESEND_API_KEY = "re_YMw5NFvc_BzLYtJAwr7Nbn1YJm1ATvpA8";
-
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 async function sendReminders() {
   const today = new Date();
 
