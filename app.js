@@ -16,7 +16,8 @@ form.addEventListener("submit", async function (event) {
     plan: document.getElementById("plan").value,
     amount: document.getElementById("amount").value,
     notes: document.getElementById("notes").value,
-
+    receipt_url: receiptUrl,
+    is_paid: false
     registration_date: new Date().toISOString(),
 
     next_due_date: new Date(
