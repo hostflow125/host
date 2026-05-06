@@ -235,30 +235,7 @@
     <p>© 2026 HostFlow — Professional Hosting Management</p>
   </footer>
 
-  <script>
-    const form = document.getElementById('registrationForm');
-
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const clientData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        website: document.getElementById('website').value,
-        plan: document.getElementById('plan').value,
-        amount: document.getElementById('amount').value,
-        notes: document.getElementById('notes').value,
-        registrationDate: new Date().toISOString()
-      };
-
-      console.log(clientData);
-
-      alert('Membership registration submitted successfully!');
-
-      form.reset();
-    });
-    
+ <script>
 const SUPABASE_URL = "https://wkgzrlkamugqzmuadomf.supabase.co";
 
 const SUPABASE_KEY =
@@ -287,14 +264,14 @@ form.addEventListener("submit", async function (event) {
 
   try {
     const response = await fetch(
-      SUPABASE_URL + "/rest/v1/clients",
+      `${SUPABASE_URL}/rest/v1/clients`,
       {
         method: "POST",
 
         headers: {
           "Content-Type": "application/json",
           "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
           "Prefer": "return=representation"
         },
 
@@ -303,15 +280,17 @@ form.addEventListener("submit", async function (event) {
     );
 
     if (response.ok) {
+      const data = await response.json();
+
+      console.log("Saved successfully:", data);
+
       alert("Client registered successfully!");
 
       form.reset();
-
-      console.log("Saved:", clientData);
     } else {
-      const errorData = await response.text();
+      const errorText = await response.text();
 
-      console.error("Supabase Error:", errorData);
+      console.error("Supabase Error:", errorText);
 
       alert("Error saving client data.");
     }
@@ -321,9 +300,7 @@ form.addEventListener("submit", async function (event) {
     alert("Something went wrong.");
   }
 });
-
-
-  </script>
+</script>
 
 </body>
 </html>
