@@ -1,15 +1,10 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
 async function sendReminders() {
-  const today = new Date();
+  const now = new Date();
 
-  const sevenDaysLater = new Date();
-  sevenDaysLater.setDate(today.getDate() + 7);
-
-  const targetDate = sevenDaysLater.toISOString();
-
-  // get clients due in ~7 days
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/clients?select=*`,
     {
@@ -23,13 +18,16 @@ async function sendReminders() {
   const clients = await res.json();
 
   for (const client of clients) {
+    if (!client.next_due_date) continue;
+    if (client.reminder_sent) continue;
+
     const dueDate = new Date(client.next_due_date);
 
     const diffDays =
-      (dueDate - today) / (1000 * 60 * 60 * 24);
+      (dueDate - now) / (1000 * 60 * 60 * 24);
 
-    // only send if within 7 days window
-    if (diffDays <= 7 && diffDays > 6) {
+    // ONLY send if within 7-day window
+    if (diffDays <= 7 && diffDays > 0) {
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -44,18 +42,33 @@ async function sendReminders() {
           html: `
             <h2>Hello ${client.name}</h2>
 
-            <p>Your hosting for <b>${client.website}</b> is due in 7 days.</p>
+            <p>Your hosting for <b>${client.website}</b> is due soon.</p>
 
             <p><b>Amount:</b> ₦${client.amount}</p>
 
-            <p>Please ensure payment is made to avoid interruption.</p>
-
-            <p>Thank you for trusting us.</p>
+            <p>Please renew before the due date to avoid interruption.</p>
           `
         })
       });
 
-      console.log(`Reminder sent to ${client.email}`);
+      // mark as sent
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/clients?id=eq.${client.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`
+          },
+          body: JSON.stringify({
+            reminder_sent: true,
+            reminder_sent_at: new Date().toISOString()
+          })
+        }
+      );
+
+      console.log(`Sent to ${client.email}`);
     }
   }
 }
